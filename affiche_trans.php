@@ -150,7 +150,6 @@
         <div class="row" id="transactionCards">
             <!-- Les cartes des transactions seront insérées ici via PHP -->
         </div>
-
         <!-- Pagination -->
         <nav>
             <ul class="pagination justify-content-center">
