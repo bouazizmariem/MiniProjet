@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+        .btn-primary {
+      padding: 12px 35px;
+      font-size: 1.1em;
+      background: linear-gradient(135deg, #004085, #66b3ff); /* Dégradé bleu foncé vers bleu clair */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      display: block;
+      width: 100%; /* Pour que le bouton prenne toute la largeur disponible */
+      text-align: center; /* Centrer le texte du bouton */
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #003366, #3399ff); /* Changer légèrement les couleurs au survol */
+      transform: scale(1.05); /* Légère animation au survol */
+    }
+  </style>
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="form-container">
+      <h2 class="text-center mb-4">Connexion</h2>
+      <form id="authForm" action="login.php" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" name="email" placeholder="Entrez votre email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+          <span class="error" id="passwordError">Veuillez entrer un mot de passe.</span>
+
+        </div>
+        <button type="submit" class="btn btn-primary ">Se connecter</button>
+      </form>
+
+      <div class="additional-links">
+        <a href="inscription.html">Vous n'avez pas de compte ? Inscrivez-vous</a> | 
+        <a href="forgot_pwd.html">Mot de passe oublié ?</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("authForm").addEventListener("submit", function(event) {
+        let isValid = true;
+
+        // Validation de l'email
+        const email = document.getElementById("email").value;
+        const emailError = document.getElementById("emailError");
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            emailError.style.display = "block";
+            isValid = false;
+        } else {
+            emailError.style.display = "none";
+        }
+
+        // Validation du mot de passe
+        const password = document.getElementById("mp").value;
+        const passwordError = document.getElementById("passwordError");
+
+        if (password.trim() === "") {
+            passwordError.style.display = "block";
+            isValid = false;
+        } else {
+            passwordError.style.display = "none";
+        }
+
+        // Empêche l'envoi du formulaire si les validations échouent
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>
