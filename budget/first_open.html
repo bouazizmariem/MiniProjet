@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction - Application de gestion de budget</title>
+    <style>
+        /* Général */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+
+/* Page d'introduction */
+.intro-page {
+    display: none;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Affichage de la première page au début */
+#page1 {
+    display: block;
+}
+
+/* Image de chaque page d'introduction */
+.intro-image {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    margin: 20px 0;
+}
+
+/* Description sous l'image */
+.description h1 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.description p {
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+/* Bouton suivant */
+/* Bouton suivant avec dégradé et flèche */
+.btn-next {
+    padding: 12px 35px;
+    font-size: 1.1em;
+    background: linear-gradient(135deg, #004085, #66b3ff); /* Dégradé de bleu foncé vers bleu clair */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center; /* Pour centrer le texte et la flèche verticalement */
+    justify-content: center; /* Pour centrer horizontalement */
+}
+
+/* Flèche à droite du texte */
+.btn-next::after {
+    content: ' →'; /* Flèche droite */
+    margin-left: 15px; /* Espace entre le texte et la flèche */
+}
+
+.btn-next:hover {
+    background: linear-gradient(135deg, #003366, #3399ff); /* Changer légèrement les couleurs au survol */
+    transform: scale(1.05); /* Légère animation au survol */
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Première page -->
+    <div class="intro-page" id="page1">
+        <img src="images/image1.jpg" alt="Image fonctionnalité 1" class="intro-image">
+        <div class="description">
+            <h1>Bienvenue sur notre application de gestion de budget</h1>
+            <p>Suivez vos dépenses, créez des budgets et atteignez vos objectifs financiers plus facilement.</p>
+        </div>
+        <button class="btn-next" onclick="nextPage(2)">Suivant</button>
+    </div>
+
+    <!-- Deuxième page -->
+    <div class="intro-page" id="page2">
+        <img src="images/image2.jpg" alt="Image fonctionnalité 2" class="intro-image">
+        <div class="description">
+            <h1>Organisez vos finances et gardez le controle de votre argent avec notre application flexible et facile à utiliser.<h1>
+        </div>
+        <button class="btn-next" onclick="nextPage(3)">Suivant</button>
+    </div>
+
+    <!-- Troisième page -->
+    <div class="intro-page" id="page3">
+        <img src="images/image3.jpg" alt="Image fonctionnalité 3" class="intro-image">
+        <div class="description">
+            <h1>Planification des budgets</h1>
+            <p>Créez des budgets personnalisés pour chaque catégorie et suivez vos progrès en temps réel.</p>
+        </div>
+        <button class="btn-next" onclick="nextPage(4)">Suivant</button>
+    </div>
+
+    <!-- Quatrième page -->
+    <div class="intro-page" id="page4">
+        <img src="images/image4.jpg" alt="Image fonctionnalité 4" class="intro-image">
+        <div class="description">
+            <h1>Atteignez vos objectifs financiers</h1>
+            <p>Fixez des objectifs d'épargne et suivez vos progrès avec des outils visuels.</p>
+        </div>
+        <button class="btn-next" onclick="nextPage(5)">Suivant</button>
+    </div>
+
+
+
+    <div class="intro-page" id="page5">
+        <img src="images/image5.jpg" alt="Image fonctionnalité 5" class="intro-image">
+        <div class="description">
+            <h1>Suivez vos dépenses</h1>
+            <p>Enregistrez vos achats et obtenez une idée précise de vos dépenses.</p>
+        </div>
+        <button class="btn-next" onclick="nextPage(6)">Suivant</button>
+    </div>
+
+    <div class="intro-page" id="page6">
+        <img src="images/image6.jpg" alt="Image fonctionnalité 6" class="intro-image">
+        <div class="description">
+            <h1>Ajoutez vos revenus</h1>
+            <p>Vous avez un ou plusieurs sources de revenu par mois! Ajoutez-les toutes pour financier votre budget.</p>
+        </div>
+        <button class="btn-next" onclick="window.location.href='inscription.html'">Inscrivez-vous</button>
+    </div>
+    <script>
+        function nextPage(pageNumber) {
+    // Masquer toutes les pages
+    var pages = document.querySelectorAll('.intro-page');
+    pages.forEach(function(page) {
+        page.style.display = 'none';
+    });
+
+    // Afficher la page suivante
+    document.getElementById('page' + pageNumber).style.display = 'block';
+    }
+
+  
+
+    </script>
+</body>
+</html>
