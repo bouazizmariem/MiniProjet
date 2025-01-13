@@ -1,5 +1,5 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
+include '../navbar.html';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
