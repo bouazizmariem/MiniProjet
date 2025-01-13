@@ -1,3 +1,6 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +11,7 @@
     <style>
         .container {
             max-width: 800px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
         .card-header {
             font-size: 1.25rem;
@@ -17,25 +20,44 @@
         .form-group label {
             font-weight: bold;
         }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        #content {
+            display: flex;
+            padding: 0px;
+            margin-left: 200px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2 class="text-center">Gestion des Revenus et Dépenses</h2>
 
+        <?php
+        // Récupérer la catégorie et le type depuis l'URL (si elles sont présentes)
+        $categorie = isset($_GET['categorie']) ? $_GET['categorie'] : '';
+        $type = isset($_GET['type']) ? $_GET['type'] : '';
+        ?>
+
         <!-- Formulaire pour ajouter une transaction -->
         <div class="card">
             <div class="card-header">
-                Ajouter une transaction
+                Ajouter une transaction - Catégorie : <?php echo htmlspecialchars($categorie); ?> | Type : <?php echo htmlspecialchars($type); ?>
             </div>
             <div class="card-body">
                 <form id="transactionForm" method="POST" action="submit_transaction.php">
                     <div class="form-group">
                         <label for="type_transaction">Type de Transaction</label>
-                        <select class="form-control" id="type_transaction" name="type_transaction" required>
-                            <option value="revenu">Revenu</option>
-                            <option value="dépense">Dépense</option>
-                        </select>
+                        <input type="text" class="form-control" id="type" name="type" value="<?php echo htmlspecialchars($type); ?>" readonly>
+
+                    </div>
+                    <!-- Champ de catégorie pré-rempli avec la catégorie passée en URL -->
+                    <div class="form-group">
+                        <label for="categorie">Catégorie</label>
+                        <input type="text" class="form-control" id="categorie" name="categorie" value="<?php echo htmlspecialchars($categorie); ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="montant">Montant</label>

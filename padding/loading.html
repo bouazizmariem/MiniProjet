@@ -9,6 +9,7 @@
 
     .loading-container {
       display: flex;
+      flex-direction: column; /* Empiler les éléments verticalement */
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -48,10 +49,15 @@
         opacity: 1;
       }
     }
+    .loading-container img {
+      max-width: 150px; /* Ajuster la taille de l'image */
+      margin-bottom: 20px; /* Espacement entre l'image et les points */
+    }
   </style>
 </head>
 <body>
   <div class="loading-container">
+    <img src="../images/padding.png" alt="Logo de chargement">
     <div class="dots">
       <span>.</span>
       <span>.</span>
@@ -70,9 +76,9 @@
           window.location.href = 'first_open.html'; // Page d'introduction
         } else {
           // Si l'utilisateur a déjà visité, rediriger vers la page d'authentification
-          window.location.href = 'login.html'; // Page de connexion
+          window.location.href = '../user/login.html'; // Page de connexion
         }
-      }, 2000); // Attendre 2 secondes avant de rediriger
+      }, 5000); // Attendre 2 secondes avant de rediriger
     }
   </script>
 </body>

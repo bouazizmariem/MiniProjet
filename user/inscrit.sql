@@ -1,5 +1,3 @@
-
-
 CREATE TABLE `inscrit` (
   `id` int(11) NOT NULL,
   `nom` varchar(20) NOT NULL,
