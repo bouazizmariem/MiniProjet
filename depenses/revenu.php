@@ -1,5 +1,5 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
+include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -151,7 +151,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
     <script>
         function redirectToForm(categoryName, type) {
             // Créez l'URL de redirection en ajoutant le nom de la catégorie comme paramètre
-            var url = '/test/gestion_trans/ajout_trans.php?categorie='+ encodeURIComponent(categoryName) + '&type=' + encodeURIComponent(type);
+            var url = '/MINIPROJET/gestion_trans/ajout_trans.php?categorie='+ encodeURIComponent(categoryName) + '&type=' + encodeURIComponent(type);
             // Effectuez la redirection vers l'URL formée
             window.location.href = url;
         }

@@ -1,3 +1,6 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Objectifs Financiers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-   
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         h2 {
             color: #343a40;
@@ -21,17 +24,48 @@
         .progress-bar {
             transition: width 0.4s ease;
         }
+        .list-group-item {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .list-group-item h5 {
+            color: #495057;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 800px;
+            margin-top:40px;
+
+        }
+         /* Ajustement pour le contenu avec la barre latérale */
+         body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        #content {
+            display: flex;
+            padding: 0px;
+            margin-left:200px;
+
+        }
     </style>
 </head>
 <body>
     <div class="container my-5">
-        <h2 class="text-center">Objectifs Financiers</h2>
-        <hr>
-
+        <h2 class="text-center mb-4">Objectifs Financiers</h2>
         <!-- Formulaire d'ajout d'objectif -->
         <div class="card p-4 mb-4">
-            <h4>Définir un nouvel objectif financier</h4>
-            <form id="goalForm" >
+            <h4 class="mb-3">Définir un nouvel objectif financier</h4>
+            <form id="goalForm">
                 <div class="mb-3">
                     <label for="goalName" class="form-label">Nom de l'objectif</label>
                     <input type="text" class="form-control" id="goalName" placeholder="Ex : Économiser pour les vacances" required>
@@ -44,34 +78,13 @@
                     <label for="currentAmount" class="form-label">Montant actuel (€)</label>
                     <input type="number" class="form-control" id="currentAmount" placeholder="Ex : 200" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Ajouter l'objectif</button>
-            </form>
-        </div>
-
-        <!-- Formulaire de modification d'objectif -->
-        <div class="card p-4 mb-4" id="updateFormContainer" style="display: none;">
-            <h4>Modifier l'objectif financier</h4>
-            <form id="updateGoalForm">
-                <input type="hidden" id="goalIdToUpdate"> <!-- Identifiant de l'objectif à mettre à jour -->
-                <div class="mb-3">
-                    <label for="updateGoalName" class="form-label">Nom de l'objectif</label>
-                    <input type="text" class="form-control" id="updateGoalName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="updateGoalAmount" class="form-label">Montant cible (€)</label>
-                    <input type="number" class="form-control" id="updateGoalAmount" required>
-                </div>
-                <div class="mb-3">
-                    <label for="updateCurrentAmount" class="form-label">Montant actuel (€)</label>
-                    <input type="number" class="form-control" id="updateCurrentAmount" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Mettre à jour l'objectif</button>
+                <button type="submit" class="btn btn-primary w-100">Ajouter l'objectif</button>
             </form>
         </div>
 
         <!-- Liste des objectifs -->
         <div id="goalsList" class="card p-4">
-            <h4>Vos objectifs</h4>
+            <h4 class="mb-3">Vos objectifs</h4>
             <ul class="list-group" id="goalItems">
                 <!-- Les objectifs ajoutés apparaîtront ici -->
             </ul>
