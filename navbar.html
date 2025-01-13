@@ -70,12 +70,7 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
-        /* Content styles */
-        #content {
-            margin-left: 260px;
-            padding: 20px;
-            min-height: 100vh;
-        }
+        
 
         /* Sidebar toggle button */
         #sidebar-toggle {
@@ -127,7 +122,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-
         /* Show sub-menu when active */
         .nav-item.active .sub-menu {
             display: block;
@@ -169,22 +163,22 @@
 
             </a>
             <ul class="sub-menu" id="user-sub-menu">
-                <li><a class="dropdown-item" href="#" onclick="loadContent('user/inscription.html')"><i class="zmdi zmdi-account-add"></i>Inscription</a></li>
-                <li><a class="dropdown-item" href="#" onclick="loadContent('user/login.html')"><i class="zmdi zmdi-lock"></i>Login</a></li>
-                <li><a class="dropdown-item" href="#" onclick="loadContent('user/new_pwd.html')"><i class="zmdi zmdi-key"></i>Mot de passe oublié</a></li>
+                <li><a class="dropdown-item" href="user/inscription.html"><i class="zmdi zmdi-account-add"></i>Inscription</a></li>
+                <li><a class="dropdown-item" href="user/login.html"><i class="zmdi zmdi-lock"></i>Login</a></li>
+                <li><a class="dropdown-item" href="user/new_pwd.html"><i class="zmdi zmdi-key"></i>Mot de passe oublié</a></li>
             </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadContent('gestion_trans/ajout_trans.php')"><i class="zmdi zmdi-calendar-check"></i> Ajouter Transaction</a>
+            <a class="nav-link" href="/test/gestion_trans/ajout_trans.php"><i class="zmdi zmdi-calendar-check"></i> Ajouter Transaction</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadContent('gestion_trans/affiche_trans.php')"><i class="zmdi zmdi-view-list"></i> Afficher Transaction</a>
+            <a class="nav-link" href="/test/gestion_trans/affiche_trans.php"><i class="zmdi zmdi-view-list"></i> Afficher Transaction</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadContent('acceuil.html')"><i class="zmdi zmdi-settings"></i> Accueil</a>
+            <a class="nav-link" href="/test/acceuil.html"><i class="zmdi zmdi-settings"></i> Accueil</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadContent('obj.html')"><i class="zmdi zmdi-check-circle"></i>
+            <a class="nav-link" href="/test/obj.php"><i class="zmdi zmdi-check-circle"></i>
                 objectif</a>
         </li>
     </ul>
@@ -192,7 +186,6 @@
 
 <!-- Content -->
 <div id="content">
-    <h1>Welcome!</h1>
 </div>
 
 <!-- Sidebar Toggle Button -->
@@ -217,22 +210,6 @@
         const userLinkItem = document.getElementById('user-links');
         userLinkItem.classList.toggle('active');
     });
-
-    // Load content dynamically
-    function loadContent(page) {
-        const contentDiv = document.getElementById('content');
-        fetch(page)
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.text();
-            })
-            .then(data => {
-                contentDiv.innerHTML = data;
-            })
-            .catch(error => {
-                contentDiv.innerHTML = `<p>Error loading content: ${error.message}</p>`;
-            });
-    }
 </script>
 
 </body>

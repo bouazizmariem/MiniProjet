@@ -1,3 +1,5 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +10,8 @@
     <style>
         .container {
             max-width: 800px;
-            margin-top: 30px;
+            margin-top:40px;
+
         }
         .card-header {
             font-size: 1.25rem;
@@ -16,6 +19,18 @@
         }
         .form-group label {
             font-weight: bold;
+        }
+        /* Ajustement pour le contenu avec la barre latérale */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        #content {
+            display: flex;
+            padding: 0px;
+            margin-left:200px;
+
         }
     </style>
 </head>
