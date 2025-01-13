@@ -3,7 +3,7 @@
 $servername = "localhost"; // ou 127.0.0.1
 $username = "root"; // Utilisateur par défaut sur XAMPP
 $password = ""; // Mot de passe par défaut est vide
-$dbname = "mini_projet"; // Nom de la base de données dans phpMyAdmin
+$dbname = "budget"; // Nom de la base de données dans phpMyAdmin
 
 // Créer la connexion
 $conn = new mysqli($servername, $username, $password, $dbname);
