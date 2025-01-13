@@ -156,32 +156,37 @@
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a>
         </li>
-        <!-- User section with sub-menu -->
-        <li class="nav-item" id="user-links">
-            <a class="nav-link" href="#" id="user-link-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="zmdi zmdi-account-circle"></i> utilisateur <span class="dropdown-arrow">▼</span>
-
-            </a>
-            <ul class="sub-menu" id="user-sub-menu">
-                <li><a class="dropdown-item" href="user/inscription.html"><i class="zmdi zmdi-account-add"></i>Inscription</a></li>
-                <li><a class="dropdown-item" href="user/login.html"><i class="zmdi zmdi-lock"></i>Login</a></li>
-                <li><a class="dropdown-item" href="user/new_pwd.html"><i class="zmdi zmdi-key"></i>Mot de passe oublié</a></li>
-            </ul>
+        <li class="nav-item">
+            <a class="nav-link" href="/test/acceuil.html"><i class="zmdi zmdi-account-circle"></i> Accueil</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/test/depenses/depenses.php"><i class="zmdi zmdi-money-off"></i> depenses</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/test/gestion_trans/ajout_trans.php"><i class="zmdi zmdi-calendar-check"></i> Ajouter Transaction</a>
+            <a class="nav-link" href="/test/depenses/revenu.php"><i class="zmdi zmdi-money"></i> revenu</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/test/gestion_trans/affiche_trans.php"><i class="zmdi zmdi-view-list"></i> Afficher Transaction</a>
+            <a class="nav-link" href="/test/gestion_trans/affiche_trans.php"><i class="zmdi zmdi-view-list"></i>Mes transactions</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/test/acceuil.html"><i class="zmdi zmdi-settings"></i> Accueil</a>
-        </li>
+       
         <li class="nav-item">
             <a class="nav-link" href="/test/obj.php"><i class="zmdi zmdi-check-circle"></i>
                 objectif</a>
         </li>
-    </ul>
+    <!-- User section with sub-menu -->
+    <li class="nav-item" id="user-links">
+        <a class="nav-link" href="#" id="user-link-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="zmdi zmdi-settings"></i>parametre <span class="dropdown-arrow">▼</span>
+
+        </a>
+        <ul class="sub-menu" id="user-sub-menu">
+            <li><a class="dropdown-item" href="user/logout.php"><i class="zmdi zmdi-close-circle"></i>déconnexion</a></li>
+            <li><a class="dropdown-item" href="user/new_pwd.html"><i class="zmdi zmdi-key"></i>Mot de passe oublié</a></li>
+        </ul>
+    </li>
+</ul>
+
 </div>
 
 <!-- Content -->

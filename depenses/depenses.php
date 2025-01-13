@@ -1,3 +1,5 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -47,6 +49,10 @@
         .icon-wrapper:hover .category-label {
             display: block;
         }
+        .container {
+            margin-top: 0 !important;
+        }
+
         .add-category .btn-add-category {
             background-color: transparent;
             border: none;
@@ -60,7 +66,7 @@
             color: #0056b3;
         }
         
-</style>
+    </style>
 </head>
 <body>
     <div class="container text-center mt-5">
@@ -68,187 +74,151 @@
         <div class="d-flex justify-content-center flex-wrap mt-4">
             <!-- Icônes des catégories avec leurs labels -->
             <div class="icon-wrapper">
-                <a href="gestion_trans\gestion_trans\ajout_trans.php?categorie=Voyage" class="icon-category-link">
-                <div class="icon-category" data-categorie="Voyage">
-                    <i class="bi-airplane"></i>
-                </div>
-                <div class="category-label">Voyage</div>
+                <a href="#" onclick="redirectToForm('Voyage','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Voyage">
+                        <i class="bi-airplane"></i>
+                    </div>
+                    <div class="category-label">Voyage</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Cadeau" class="icon-category-link">
-                <div class="icon-category" data-categorie="Cadeau">
-                    <i class="bi-gift"></i>
-                </div>
-                <div class="category-label">Cadeau</div>
+                <a href="#" onclick="redirectToForm('Cadeau','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Cadeau">
+                        <i class="bi-gift"></i>
+                    </div>
+                    <div class="category-label">Cadeau</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Anniversaire" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Anniversaire">
-                    <i class="bi-cake"></i>
-                </div>
-                <div class="category-label">Anniversaire</div>
+                <a href="#" onclick="redirectToForm('Anniversaire','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Anniversaire">
+                        <i class="bi-cake"></i>
+                    </div>
+                    <div class="category-label">Anniversaire</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Transport" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Transport">
-                    <i class="bi-car-front"></i>
-                </div>
-                <div class="category-label">Transport</div>
+                <a href="#" onclick="redirectToForm('Transport','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Transport">
+                        <i class="bi-car-front"></i>
+                    </div>
+                    <div class="category-label">Transport</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Frais d'éducation" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Frais d'éducation">
-                    <i class="bi-mortarboard"></i>
-                </div>
-                <div class="category-label">Frais d'éducation</div>
+                <a href="#" onclick="redirectToForm('Frais d\'éducation','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Frais d'éducation">
+                        <i class="bi-mortarboard"></i>
+                    </div>
+                    <div class="category-label">Frais d'éducation</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Soins de santé" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Soins de santé">
-                    <i class="bi-hospital"></i>
-                </div>
-                <div class="category-label">Soins de santé</div>
+                <a href="#" onclick="redirectToForm('Soins de santé','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Soins de santé">
+                        <i class="bi-hospital"></i>
+                    </div>
+                    <div class="category-label">Soins de santé</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Maison" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Maison">
-                    <i class="bi-house"></i>
-                </div>
-                <div class="category-label">Maison</div>
+                <a href="#" onclick="redirectToForm('Maison','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Maison">
+                        <i class="bi-house"></i>
+                    </div>
+                    <div class="category-label">Maison</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Shopping" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Shopping">
-                    <i class="bi-cart3"></i>
-                </div>
-                <div class="category-label">Shopping</div>
+                <a href="#" onclick="redirectToForm('Shopping','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Shopping">
+                        <i class="bi-cart3"></i>
+                    </div>
+                    <div class="category-label">Shopping</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Facture d'eau" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Facture d'eau">
-                    <i class="bi-journal-check"></i>
-                </div>
-                <div class="category-label">Facture d'eau</div>
+                <a href="#" onclick="redirectToForm('Facture d\'eau','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Facture d'eau">
+                        <i class="bi-journal-check"></i>
+                    </div>
+                    <div class="category-label">Facture d'eau</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Banque" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Banque">
-                    <i class="bi-bank"></i>
-                </div>
-                <div class="category-label">Banque</div>
+                <a href="#" onclick="redirectToForm('Banque','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Banque">
+                        <i class="bi-bank"></i>
+                    </div>
+                    <div class="category-label">Banque</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Facture d'électricité" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Facture d'électricité">
-                    <i class="bi-fuel-pump"></i>
-                </div>
-                <div class="category-label">Facture d'électricité</div>
+                <a href="#" onclick="redirectToForm('Facture d\'électricité','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Facture d\'électricité">
+                        <i class="bi-fuel-pump"></i>
+                    </div>
+                    <div class="category-label">Facture d'électricité</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Frais d'Internet" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Frais d'Internet">
-                    <i class="bi-globe2"></i>
-                </div>
-                <div class="category-label">Frais d'Internet</div>
+                <a href="#" onclick="redirectToForm('Frais d\'Internet','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Frais d'Internet">
+                        <i class="bi-globe2"></i>
+                    </div>
+                    <div class="category-label">Frais d'Internet</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=PhotoShoot" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="PhotoShoot">
-                    <i class="bi-camera2"></i>
-                </div>
-                <div class="category-label">PhotoShoot</div>
+                <a href="#" onclick="redirectToForm('PhotoShoot','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="PhotoShoot">
+                        <i class="bi-camera2"></i>
+                    </div>
+                    <div class="category-label">PhotoShoot</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Médicaments" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Médicaments">
-                    <i class="bi-capsule"></i>
-                </div>
-                <div class="category-label">Médicaments</div>
+                <a href="#" onclick="redirectToForm('Médicaments','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Médicaments">
+                        <i class="bi-capsule"></i>
+                    </div>
+                    <div class="category-label">Médicaments</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Achats en ligne" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Achats en ligne">
-                    <i class="bi-coin"></i>
-                </div>
-                <div class="category-label">Achats en ligne</div>
+                <a href="#" onclick="redirectToForm('Achats en ligne','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Achats en ligne">
+                        <i class="bi-coin"></i>
+                    </div>
+                    <div class="category-label">Achats en ligne</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Cinéma" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Cinéma">
-                    <i class="bi-collection-play"></i>
-                </div>
-                <div class="category-label">Cinéma</div>
+                <a href="#" onclick="redirectToForm('Cinéma','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Cinéma">
+                        <i class="bi-collection-play"></i>
+                    </div>
+                    <div class="category-label">Cinéma</div>
                 </a>
             </div>
             <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Divertissement" class="icon-category-link">
-
-                <div class="icon-category" data-categorie="Divertissement">
-                    <i class="bi-suitcase2"></i>
-                </div>
-                <div class="category-label">Divertissement</div>
-                </a>
-            </div>
-            <div class="icon-wrapper">
-                <a href="gestion_trans\ajout_trans.php?categorie=Voyage" class="icon-category-link">
-
-                <div class="icon-wrapper add-category">
-                    <button class="btn-add-category" onclick="addCategory()">
-                        <i class="bi-plus-circle"></i>
-                    </button>
-                    <div class="category-label">Ajouter une catégorie</div>
-                </div>
+                <a href="#" onclick="redirectToForm('Divertissement','dépense')" class="icon-category-link">
+                    <div class="icon-category" data-categorie="Divertissement">
+                        <i class="bi-suitcase2"></i>
+                    </div>
+                    <div class="category-label">Divertissement</div>
                 </a>
             </div>
         </div>
     </div>
+
     <script>
-        function addCategory() {
-            const newCategory = prompt("Entrez le nom de la nouvelle catégorie :");
-            if (newCategory) {
-                const container = document.querySelector(".row.gy-3");
-                const categoryElement = document.createElement("div");
-                categoryElement.className = "col-6 col-md-4 col-xl-2";
-                categoryElement.innerHTML = `
-                    <div class="icon-wrapper">
-                        <div class="icon-category" data-categorie="${newCategory}">
-                            <i class="bi-question-circle"></i>
-                        </div>
-                        <div class="category-label">${newCategory}</div>
-                    </div>
-            `;
-            container.appendChild(categoryElement);
+        function redirectToForm(categoryName, type) {
+            // Créez l'URL de redirection en ajoutant le nom de la catégorie et du type comme paramètres
+            var url = '/test/gestion_trans/ajout_trans.php?categorie=' + encodeURIComponent(categoryName) + '&type=' + encodeURIComponent(type);
+            // Effectuez la redirection vers l'URL formée
+            window.location.href = url;
         }
-}
     </script>
 </body>
 </html>

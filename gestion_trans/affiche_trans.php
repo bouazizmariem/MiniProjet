@@ -154,6 +154,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
                 $cardClass = ($row['type_transaction'] == 'revenu') ? 'revenu' : 'depense';
                 $montant = ($row['type_transaction'] == 'revenu') ? '+' . number_format($row['montant'], 2) : '-' . number_format($row['montant'], 2);
                 $icon = ($row['type_transaction'] == 'revenu') ? 'fa fa-dollar-sign' : 'fa fa-credit-card'; // Icône
+                $categorie = htmlspecialchars($row['categorie']); // Sécuriser la catégorie
 
                 echo "<div class='transaction-item $cardClass'>
                         <div class='transaction-icon'>
@@ -161,6 +162,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
                         </div>
                         <div class='transaction-info'>
                             <strong>Date:</strong> {$row['date_transaction']}<br>
+                            <strong>Catégorie:</strong> $categorie<br>
                             <strong>Montant:</strong> $montant
                         </div>
                     </div>";
@@ -195,86 +197,3 @@ include $_SERVER['DOCUMENT_ROOT'] . '/test/navbar.html';
     </div>
 </body>
 </html>
-<<<<<<< HEAD
-=======
-
-<?php
-// Informations de connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "budget";
-
-// Créer la connexion
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
-
-// Récupérer les paramètres de filtrage
-$typeFilter = isset($_GET['type']) ? $_GET['type'] : '';
-
-// Pagination
-$limit = 6; // Nombre de transactions par page
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-// Récupérer les transactions avec le filtre appliqué
-$sql = "SELECT * FROM transaction";
-if ($typeFilter) {
-    $sql .= " WHERE type_transaction = '$typeFilter'";
-}
-$sql .= " ORDER BY date_transaction DESC LIMIT $limit OFFSET $offset";
-$result = $conn->query($sql);
-
-// Compter le nombre total de transactions
-$totalSql = "SELECT COUNT(*) AS total FROM transaction";
-if ($typeFilter) {
-    $totalSql .= " WHERE type_transaction = '$typeFilter'";
-}
-$totalResult = $conn->query($totalSql);
-$total = $totalResult->fetch_assoc()['total'];
-$totalPages = ceil($total / $limit);
-
-// Afficher les cartes des transactions
-while($row = $result->fetch_assoc()) {
-    $cardClass = ($row['type_transaction'] == 'revenu') ? 'revenu' : 'depense';
-    $montant = ($row['type_transaction'] == 'revenu') ? '+' . number_format($row['montant'], 2) : '-' . number_format($row['montant'], 2);
-    $icon = ($row['type_transaction'] == 'revenu') ? 'fa fa-dollar-sign' : 'fa fa-credit-card'; // Icône
-
-    echo "<div class='col-md-4'>
-            <div class='card $cardClass'>
-                <div class='card-header'>{$row['type_transaction']}</div>
-                <div class='card-body'>
-                    <div class='transaction-info'>
-                        <i class='transaction-icon $icon'></i>
-                        <strong>Date:</strong> {$row['date_transaction']}
-                    </div>
-                    <div class='transaction-info'>
-                        <strong>Montant:</strong> $montant
-                    </div>
-                </div>
-            </div>
-        </div>";
-}
-
-// Pagination
-echo "<ul class='pagination'>";
-if ($page > 1) {
-    echo "<li class='page-item'><a class='page-link' href='?page=" . ($page - 1) . "'>Précédent</a></li>";
-}
-
-for ($i = 1; $i <= $totalPages; $i++) {
-    echo "<li class='page-item'><a class='page-link' href='?page=$i'>$i</a></li>";
-}
-
-if ($page < $totalPages) {
-    echo "<li class='page-item'><a class='page-link' href='?page=" . ($page + 1) . "'>Suivant</a></li>";
-}
-echo "</ul>";
-
-$conn->close();
-?>
->>>>>>> 87b692b468a4e575f8acf921b38209f84c956190
