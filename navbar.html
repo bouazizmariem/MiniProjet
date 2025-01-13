@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons: Material Design -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Sidebar styles */
+        #sidebar {
+            position: fixed;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        #sidebar header {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        #sidebar header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #sidebar .nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sidebar .nav li {
+            position: relative;
+        }
+
+        #sidebar .nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #sidebar .nav a:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        
+
+        /* Sidebar toggle button */
+        #sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #a878db, #4886f1ec);
+            color: white;
+            border: none;
+            padding: 9px 13px;
+            font-size: 0.9em;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #sidebar.hidden {
+            transform: translateX(-260px);
+        }
+
+        #content.sidebar-hidden {
+            margin-left: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* User sub-menu styles */
+        .sub-menu {
+            margin-left: -10px;
+            display: none;
+            list-style-type: none; 
+            background: linear-gradient(135deg, #6b89bdce);
+
+        }
+
+        .sub-menu li {
+            list-style-type: none; 
+            padding-left: 0; 
+        }
+
+        .sub-menu li a {
+            color: white;
+            padding: 12px 20px;
+            font-size: 1em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Show sub-menu when active */
+        .nav-item.active .sub-menu {
+            display: block;
+        }
+
+        /* Icon size and alignment */
+        .zmdi {
+            font-size: 22px;
+            margin-right: 10px;
+        }
+         /* Dropdown arrow */
+         .dropdown-arrow {
+            margin-left: auto;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <header>
+        <a href="#">Do money<br>differently</a>
+    </header>
+    <ul class="nav flex-column" id="sidebar-items">
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../acceuil.html"><i class="zmdi zmdi-account-circle"></i> Accueil</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="./depenses/depenses.php"><i class="zmdi zmdi-money-off"></i> depenses</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./depenses/revenu.php"><i class="zmdi zmdi-money"></i> revenu</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./gestion_trans/affiche_trans.php"><i class="zmdi zmdi-view-list"></i>Mes transactions</a>
+        </li>
+       
+        <li class="nav-item">
+            <a class="nav-link" href="../obj.php"><i class="zmdi zmdi-check-circle"></i>
+                objectif</a>
+        </li>
+    <!-- User section with sub-menu -->
+    <li class="nav-item" id="user-links">
+        <a class="nav-link" href="#" id="user-link-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="zmdi zmdi-settings"></i>parametre <span class="dropdown-arrow">▼</span>
+
+        </a>
+        <ul class="sub-menu" id="user-sub-menu">
+            <li><a class="dropdown-item" href="user/logout.php"><i class="zmdi zmdi-close-circle"></i>déconnexion</a></li>
+            <li><a class="dropdown-item" href="user/new_pwd.html"><i class="zmdi zmdi-key"></i>Mot de passe oublié</a></li>
+        </ul>
+    </li>
+</ul>
+
+</div>
+
+<!-- Content -->
+<div id="content">
+</div>
+
+<!-- Sidebar Toggle Button -->
+<button id="sidebar-toggle">☰</button>
+
+<!-- Bootstrap and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Sidebar toggle functionality
+    const toggleButton = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+
+    toggleButton.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+        content.classList.toggle('sidebar-hidden');
+    });
+
+    // Toggle User sub-menu visibility
+    document.getElementById('user-link-toggle').addEventListener('click', () => {
+        const userLinkItem = document.getElementById('user-links');
+        userLinkItem.classList.toggle('active');
+    });
+</script>
+
+</body>
+</html>
