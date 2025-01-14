@@ -1,12 +1,12 @@
-CREATE TABLE `test_data` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `user_id` INT NOT NULL,
-    `previous_month_revenues` DECIMAL(10, 2) NOT NULL,
-    `rolling_revenues_3m` DECIMAL(10, 2) NOT NULL,
-    `previous_month_expenses` DECIMAL(10, 2) NOT NULL,
-    `rolling_expenses_3m` DECIMAL(10, 2) NOT NULL,
-    `previous_net_balance` DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (`user_id`) REFERENCES `inscrit`(`id`)
+CREATE TABLE test_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    previous_month_revenues DECIMAL(10, 2) NOT NULL,
+    rolling_revenues_3m DECIMAL(10, 2) NOT NULL,
+    previous_month_expenses DECIMAL(10, 2) NOT NULL,
+    rolling_expenses_3m DECIMAL(10, 2) NOT NULL,
+    previous_net_balance DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES inscrit`(id`)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -33,5 +33,3 @@ CHANGE COLUMN rolling_expenses_3m Rolling_Expenses_3M FLOAT,
 CHANGE COLUMN previous_net_balance Previous_NetBalance FLOAT,
 CHANGE COLUMN previous_month_revenues Previous_Month_Revenues FLOAT,
 CHANGE COLUMN rolling_revenues_3m Rolling_Revenues_3M FLOAT;
-
-

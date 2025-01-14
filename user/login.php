@@ -25,19 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../navbar.html");
             exit();
         } else {
-            // Si le mot de passe est incorrect
-            echo "Mot de passe invalide.";
             header("Location: login.html");
             exit();
         }
     } else {
-        // Si l'utilisateur n'est pas trouvé
-        echo "Aucun utilisateur trouvé.";
         header("Location: login.html");
         exit();
     }
 
-    // Fermer la requête préparée
     $stmt->close();
 }
 ?>

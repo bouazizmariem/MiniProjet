@@ -1,6 +1,6 @@
 <?php
 session_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/MiniProjet/navbar.html';
+include $_SERVER['DOCUMENT_ROOT'] . '../navbar.html';
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {

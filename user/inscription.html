@@ -130,10 +130,10 @@
 
     // Affichage des erreurs en temps réel
     emailInput.addEventListener('input', () => {
-      document.getElementById('emailError').textContent = emailPattern.MiniProjet(emailInput.value) ? '' : "L'email n'est pas valide.";
+      document.getElementById('emailError').textContent = emailPattern.test(emailInput.value) ? '' : "L'email n'est pas valide.";
     });
     mpInput.addEventListener('input', () => {
-      document.getElementById('mpError').textContent = passwordPattern.MiniProjet(mpInput.value) 
+      document.getElementById('mpError').textContent = passwordPattern.test(mpInput.value) 
         ? '' 
         : "Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, un chiffre et un symbole spécial.";
     });
@@ -148,8 +148,8 @@
       event.preventDefault();
 
       // Vérifier les champs avant de soumettre
-      const isEmailValid = emailPattern.MiniProjet(emailInput.value);
-      const isPasswordValid = passwordPattern.MiniProjet(mpInput.value);
+      const isEmailValid = emailPattern.test(emailInput.value);
+      const isPasswordValid = passwordPattern.test(mpInput.value);
       const isPasswordConfirmed = confirmMpInput.value === mpInput.value;
 
       if (!isEmailValid) emailError.textContent = "L'email n'est pas valide.";

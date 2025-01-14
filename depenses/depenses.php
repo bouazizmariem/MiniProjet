@@ -1,4 +1,6 @@
 <?php
+session_start(); 
+
 include '../navbar.html'; ?>
 <!DOCTYPE html>
 <html lang="fr">
