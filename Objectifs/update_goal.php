@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once 'config.php'; // Assurez-vous que la configuration de votre base de données est incluse
 
 if ($conn->connect_error) {
@@ -8,8 +10,11 @@ if ($conn->connect_error) {
 // Vérifier si la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Récupérer les données du formulaire
-    $goalId = $_POST['goalId'];
+    if (!isset($_POST['id'], $_POST['goalName'], $_POST['goalAmount'], $_POST['currentAmount'])) {
+        echo json_encode(['success' => false, 'message' => 'Données incomplètes.']);
+        exit;
+    }
+    $goalId = $_POST['id'];
     $nom = $_POST['goalName'];
     $montantCible = $_POST['goalAmount'];
     $montantActuel = $_POST['currentAmount'];

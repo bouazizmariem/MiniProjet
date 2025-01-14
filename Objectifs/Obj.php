@@ -86,8 +86,38 @@ include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
         <div id="goalsList" class="card p-4">
             <h4 class="mb-3">Vos objectifs</h4>
             <ul class="list-group" id="goalItems">
-                <!-- Les objectifs ajoutés apparaîtront ici -->
+            <input type="hidden" id="goalId" name="goalId" value="">
+
             </ul>
+        </div>
+    </div>
+ <!-- Modal pour modifier l'objectif -->
+ <div class="modal fade" id="editGoalModal" tabindex="-1" aria-labelledby="editGoalModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editGoalModalLabel">Modifier l'objectif</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editGoalForm">
+                        <input type="hidden" id="editGoalId">
+                        <div class="mb-3">
+                            <label for="editGoalName" class="form-label">Nom de l'objectif</label>
+                            <input type="text" class="form-control" id="editGoalName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editGoalAmount" class="form-label">Montant cible (€)</label>
+                            <input type="number" class="form-control" id="editGoalAmount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCurrentAmount" class="form-label">Montant actuel (€)</label>
+                            <input type="number" class="form-control" id="editCurrentAmount" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Enregistrer les modifications</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -140,7 +170,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
             .then(data => {
                 console.log(data);  // Debug, afficher les données dans la console
                 const goalItems = document.getElementById("goalItems");
-                const updateFormContainer = document.getElementById("updateFormContainer");
+             
 
                 if (Array.isArray(data) && data.length > 0) {
                     data.forEach(goal => {
@@ -188,51 +218,51 @@ include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
             .catch(error => console.error('Erreur:', error));
         };
 
-        // Afficher le formulaire de modification avec les valeurs de l'objectif
-        function editGoal(id, nom, montantCible, montantActuel) {
-            document.getElementById('goalIdToUpdate').value = id;
-            document.getElementById('updateGoalName').value = nom;
-            document.getElementById('updateGoalAmount').value = montantCible;
-            document.getElementById('updateCurrentAmount').value = montantActuel;
+        window.editGoal = function(id, goalName, goalAmount, currentAmount) {
+                document.getElementById("editGoalId").value = id;
+                document.getElementById("editGoalName").value = goalName;
+                document.getElementById("editGoalAmount").value = goalAmount;
+                document.getElementById("editCurrentAmount").value = currentAmount;
 
-            // Afficher le formulaire de mise à jour
-            document.getElementById('updateFormContainer').style.display = 'block';
-        }
+                const modal = new bootstrap.Modal(document.getElementById("editGoalModal"));
+                modal.show();
+            };
+       
 
-        // Écouteur d'événements pour soumettre le formulaire de mise à jour
-        document.getElementById('updateGoalForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Empêcher la soumission par défaut
+        document.getElementById("editGoalForm").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-            const goalId = document.getElementById('goalIdToUpdate').value;
-            const goalName = document.getElementById('updateGoalName').value;
-            const goalAmount = document.getElementById('updateGoalAmount').value;
-            const currentAmount = document.getElementById('updateCurrentAmount').value;
+            const id = document.getElementById("editGoalId").value;
+            const goalName = document.getElementById("editGoalName").value;
+            const goalAmount = document.getElementById("editGoalAmount").value;
+            const currentAmount = document.getElementById("editCurrentAmount").value;
 
-            // Faire une requête POST pour mettre à jour l'objectif
+            // Appel AJAX pour mettre à jour les données
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("goalName", goalName);
+            formData.append("goalAmount", goalAmount);
+            formData.append("currentAmount", currentAmount);
+
             fetch('update_goal.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    goalId: goalId,
-                    goalName: goalName,
-                    goalAmount: goalAmount,
-                    currentAmount: currentAmount
-                })
+                body: formData,
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     alert(data.message);
-                    // Recharger la liste des objectifs après la mise à jour
-                    location.reload();
+                    location.reload(); // Recharge la page
                 } else {
                     alert(data.message);
                 }
             })
-            .catch(error => console.error('Erreur:', error));
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert("Une erreur s'est produite.");
+            });
         });
+        
 
     </script>
 
