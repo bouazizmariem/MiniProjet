@@ -1,5 +1,7 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
+session_start(); 
+
+include '../navbar.html';
 ?>
 <!DOCTYPE html>
 <html lang="fr">

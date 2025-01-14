@@ -1,7 +1,9 @@
 <?php
+session_start(); 
+
 // Récupérer les paramètres de filtrage
 $typeFilter = isset($_GET['type']) ? $_GET['type'] : '';
-include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
+include '../navbar.html';
 ?>
 
 <!DOCTYPE html>

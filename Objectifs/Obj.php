@@ -1,6 +1,8 @@
 <?php
+session_start(); 
+
 // Inclure la barre de navigation
-include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
+include '../navbar.html';
 
 // Inclusion du fichier de configuration pour la connexion DB
 require_once 'config.php'; 

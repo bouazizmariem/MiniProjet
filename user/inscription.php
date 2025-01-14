@@ -18,10 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Exécution de la requête
     if ($stmt->execute()) {
-        echo "Inscription réussie !";
-    } else {
-        echo "Erreur lors de l'inscription.";
-    }
+        header("Location: ../navbar.html");
+    } 
 }
-
 ?>
