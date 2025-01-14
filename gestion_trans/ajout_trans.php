@@ -1,8 +1,8 @@
 <?php
 session_start();
-include $_SERVER['DOCUMENT_ROOT'] . '../navbar.html';
 
-// Vérifier si l'utilisateur est connecté
+include '../navbar.html'; 
+
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
     die("Erreur : L'utilisateur n'est pas connecté ou l'ID utilisateur est invalide.");
 }
