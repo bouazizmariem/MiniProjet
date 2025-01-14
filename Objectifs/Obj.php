@@ -1,6 +1,83 @@
 <?php
+// Inclure la barre de navigation
 include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
+
+// Inclusion du fichier de configuration pour la connexion DB
+require_once 'config.php'; 
+
+// Vérification de la connexion
+if (!$conn) {
+    die("La connexion à la base de données a échoué.");
+}
+
+// Traitement du formulaire pour ajouter un objectif
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'add') {
+    $nom = $_POST['goalName'];
+    $montantCible = $_POST['goalAmount'];
+    $montantActuel = $_POST['currentAmount'];
+    $progression = ($montantActuel / $montantCible) * 100;
+
+    $stmt = $conn->prepare("INSERT INTO objectifs (nom, montant_cible, montant_actuel, progression) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("sddd", $nom, $montantCible, $montantActuel, $progression); 
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Objectif ajouté avec succès');</script>";
+    } else {
+        echo "<script>alert('Erreur lors de l\'ajout de l\'objectif');</script>";
+    }
+
+    $stmt->close();
+}
+
+// Traitement de la modification d'un objectif
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'update') {
+    $id = $_POST['goalId'];
+    $nom = $_POST['goalName'];
+    $montantCible = $_POST['goalAmount'];
+    $montantActuel = $_POST['currentAmount'];
+    $progression = ($montantActuel / $montantCible) * 100;
+
+    $stmt = $conn->prepare("UPDATE objectifs SET nom = ?, montant_cible = ?, montant_actuel = ?, progression = ? WHERE id = ?");
+    $stmt->bind_param("sdddi", $nom, $montantCible, $montantActuel, $progression, $id); 
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Objectif modifié avec succès');</script>";
+    } else {
+        echo "<script>alert('Erreur lors de la modification de l\'objectif');</script>";
+    }
+
+    $stmt->close();
+}
+
+// Traitement de la suppression d'un objectif
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $stmt = $conn->prepare("DELETE FROM objectifs WHERE id = ?");
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Objectif supprimé avec succès');</script>";
+    } else {
+        echo "<script>alert('Erreur lors de la suppression de l\'objectif');</script>";
+    }
+
+    $stmt->close();
+}
+
+// Requête SQL pour récupérer les objectifs
+$sql = "SELECT id, nom, montant_cible, montant_actuel, (montant_actuel / montant_cible) * 100 AS progression FROM objectifs";
+$result = $conn->query($sql);
+
+$objectifs = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $objectifs[] = $row;
+    }
+}
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -65,206 +142,79 @@ include $_SERVER['DOCUMENT_ROOT'] . '/MINIPROJET/navbar.html';
         <!-- Formulaire d'ajout d'objectif -->
         <div class="card p-4 mb-4">
             <h4 class="mb-3">Définir un nouvel objectif financier</h4>
-            <form id="goalForm">
+            <form method="POST">
+                <input type="hidden" name="action" value="add">
                 <div class="mb-3">
                     <label for="goalName" class="form-label">Nom de l'objectif</label>
-                    <input type="text" class="form-control" id="goalName" placeholder="Ex : Économiser pour les vacances" required>
+                    <input type="text" class="form-control" name="goalName" id="goalName" placeholder="Ex : Économiser pour les vacances" required>
                 </div>
                 <div class="mb-3">
                     <label for="goalAmount" class="form-label">Montant cible (€)</label>
-                    <input type="number" class="form-control" id="goalAmount" placeholder="Ex : 1000" required>
+                    <input type="number" class="form-control" name="goalAmount" id="goalAmount" placeholder="Ex : 1000" required>
                 </div>
                 <div class="mb-3">
                     <label for="currentAmount" class="form-label">Montant actuel (€)</label>
-                    <input type="number" class="form-control" id="currentAmount" placeholder="Ex : 200" required>
+                    <input type="number" class="form-control" name="currentAmount" id="currentAmount" placeholder="Ex : 200" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Ajouter l'objectif</button>
             </form>
         </div>
 
         <!-- Liste des objectifs -->
-        <div id="goalsList" class="card p-4">
+        <div class="card p-4">
             <h4 class="mb-3">Vos objectifs</h4>
-            <ul class="list-group" id="goalItems">
-            <input type="hidden" id="goalId" name="goalId" value="">
+            <ul class="list-group">
+                <?php if (!empty($objectifs)): ?>
+                    <?php foreach ($objectifs as $goal): ?>
+                        <li class="list-group-item mb-3">
+                            <h5><?php echo $goal['nom']; ?></h5>
+                            <p>Montant actuel: €<?php echo number_format($goal['montant_actuel'], 2); ?> / €<?php echo number_format($goal['montant_cible'], 2); ?></p>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $goal['progression']; ?>%" aria-valuenow="<?php echo $goal['progression']; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo number_format($goal['progression'], 1); ?>%</div>
+                            </div>
+                            <!-- Bouton de suppression -->
+                            <a href="?action=delete&id=<?php echo $goal['id']; ?>" class="btn btn-danger btn-sm mt-2">Supprimer</a>
+                            <!-- Bouton de modification pour afficher le modal -->
+                            <button class="btn btn-warning btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $goal['id']; ?>">Modifier</button>
+                        </li>
 
+                        <!-- Modal de modification -->
+                        <div class="modal fade" id="editModal<?php echo $goal['id']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel">Modifier l'objectif</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST">
+                                            <input type="hidden" name="action" value="update">
+                                            <input type="hidden" name="goalId" value="<?php echo $goal['id']; ?>">
+                                            <div class="mb-3">
+                                                <label for="goalName" class="form-label">Nom de l'objectif</label>
+                                                <input type="text" class="form-control" name="goalName" value="<?php echo $goal['nom']; ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="goalAmount" class="form-label">Montant cible (€)</label>
+                                                <input type="number" class="form-control" name="goalAmount" value="<?php echo $goal['montant_cible']; ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="currentAmount" class="form-label">Montant actuel (€)</label>
+                                                <input type="number" class="form-control" name="currentAmount" value="<?php echo $goal['montant_actuel']; ?>" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary w-100">Sauvegarder les modifications</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li class="list-group-item">Aucun objectif trouvé.</li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
- <!-- Modal pour modifier l'objectif -->
- <div class="modal fade" id="editGoalModal" tabindex="-1" aria-labelledby="editGoalModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editGoalModalLabel">Modifier l'objectif</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editGoalForm">
-                        <input type="hidden" id="editGoalId">
-                        <div class="mb-3">
-                            <label for="editGoalName" class="form-label">Nom de l'objectif</label>
-                            <input type="text" class="form-control" id="editGoalName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editGoalAmount" class="form-label">Montant cible (€)</label>
-                            <input type="number" class="form-control" id="editGoalAmount" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCurrentAmount" class="form-label">Montant actuel (€)</label>
-                            <input type="number" class="form-control" id="editCurrentAmount" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Enregistrer les modifications</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById("goalForm").addEventListener("submit", function(event) {
-            event.preventDefault();  // Empêche le rechargement de la page
-
-            // Récupérer les données du formulaire
-            const goalName = document.getElementById("goalName").value;
-            const goalAmount = document.getElementById("goalAmount").value;
-            const currentAmount = document.getElementById("currentAmount").value;
-
-            // Vérifier que les champs sont bien remplis
-            if (goalName && goalAmount && currentAmount) {
-                // Créer l'objet FormData pour envoyer les données
-                const formData = new FormData();
-                formData.append("goalName", goalName);
-                formData.append("goalAmount", goalAmount);
-                formData.append("currentAmount", currentAmount);
-
-                // Envoyer les données au fichier PHP via AJAX
-                fetch('AjoutObjectif.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message);  // Afficher un message de succès
-                        // Optionnel: Réinitialiser le formulaire
-                        document.getElementById("goalForm").reset();
-                    } else {
-                        alert(data.message);  // Afficher un message d'erreur
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                    alert("Une erreur s'est produite lors de l'ajout de l'objectif.");
-                });
-            } else {
-                alert("Tous les champs sont requis.");
-            }
-        });
-
-        window.onload = function () {
-            fetch('afficher_obj.php', {
-                method: 'GET' // Requête GET vers afficher_obj.php
-            })
-            .then(response => response.json())  // On récupère les données JSON
-            .then(data => {
-                console.log(data);  // Debug, afficher les données dans la console
-                const goalItems = document.getElementById("goalItems");
-             
-
-                if (Array.isArray(data) && data.length > 0) {
-                    data.forEach(goal => {
-                        const goalName = goal.nom;
-                        const goalAmount = parseFloat(goal.montant_cible);
-                        const currentAmount = parseFloat(goal.montant_actuel);
-                        let progress = goal.progression;
-                        progress = !isNaN(progress) ? parseFloat(progress) : 0;
-
-                        // Vérification si 'progress' est bien un nombre avant d'utiliser toFixed()
-                        if (!isNaN(progress)) {
-                            // Création de l'élément de liste pour chaque objectif
-                            const goalItem = document.createElement("li");
-                            goalItem.classList.add("list-group-item", "mb-3");
-
-                            goalItem.innerHTML = `
-                                <h5>${goalName}</h5>
-                                <p>Montant actuel: €${currentAmount.toFixed(2)} / €${goalAmount.toFixed(2)}</p>
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress.toFixed(1)}%</div>
-                                </div>
-                                <button class="btn btn-warning btn-sm" onclick="editGoal(${goal.id}, '${goal.nom}', ${goal.montant_cible}, ${goal.montant_actuel})">Modifier</button>
-                            `;
-                            goalItems.appendChild(goalItem);  // Ajout de l'objectif à la liste
-                        } else {
-                            // Si 'progress' est invalide, afficher une barre de progression à 0%
-                            const goalItem = document.createElement("li");
-                            goalItem.classList.add("list-group-item", "mb-3");
-
-                            goalItem.innerHTML = `
-                                <h5>${goalName}</h5>
-                                <p>Montant actuel: €${currentAmount.toFixed(2)} / €${goalAmount.toFixed(2)}</p>
-                                <div class="progress">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                                </div>
-                                <button class="btn btn-warning btn-sm" onclick="editGoal(${goal.id}, '${goal.nom}', ${goal.montant_cible}, ${goal.montant_actuel})">Modifier</button>
-                            `;
-                            goalItems.appendChild(goalItem);  // Ajout de l'objectif à la liste
-                        }
-                    });
-                } else {
-                    goalItems.innerHTML = '<li class="list-group-item">Aucun objectif trouvé.</li>';
-                }
-            })
-            .catch(error => console.error('Erreur:', error));
-        };
-
-        window.editGoal = function(id, goalName, goalAmount, currentAmount) {
-                document.getElementById("editGoalId").value = id;
-                document.getElementById("editGoalName").value = goalName;
-                document.getElementById("editGoalAmount").value = goalAmount;
-                document.getElementById("editCurrentAmount").value = currentAmount;
-
-                const modal = new bootstrap.Modal(document.getElementById("editGoalModal"));
-                modal.show();
-            };
-       
-
-        document.getElementById("editGoalForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            const id = document.getElementById("editGoalId").value;
-            const goalName = document.getElementById("editGoalName").value;
-            const goalAmount = document.getElementById("editGoalAmount").value;
-            const currentAmount = document.getElementById("editCurrentAmount").value;
-
-            // Appel AJAX pour mettre à jour les données
-            const formData = new FormData();
-            formData.append("id", id);
-            formData.append("goalName", goalName);
-            formData.append("goalAmount", goalAmount);
-            formData.append("currentAmount", currentAmount);
-
-            fetch('update_goal.php', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    location.reload(); // Recharge la page
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert("Une erreur s'est produite.");
-            });
-        });
-        
-
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
