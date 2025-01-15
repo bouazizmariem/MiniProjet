@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require 'C:\xampp\htdocs\MiniProjet\user\config.php';
 include 'navbar.html'; 
 
 // Vérification si l'utilisateur est connecté
@@ -41,8 +41,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
 
 // Si l'utilisateur est connecté, continuer l'exécution du script
 echo "Bienvenue, utilisateur connecté !";
-
-$user_id = $_SESSION['user_id'];  // Récupérer l'ID utilisateur de la session
+$id = $_SESSION['user_id'];  // Récupérer l'ID utilisateur de la session
+$sql = "SELECT prenom FROM inscrit WHERE id = '$id' ";
+$result = $conn->query($sql);
 
 // Variables pour stocker les prédictions
 $predicted_revenue = null;
@@ -184,9 +185,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 <div class="container">
-    <!-- Paragraphe informatif -->
-    <h1>Votre identifiant est : <?php echo $user_id; ?></h1>
-
+ <?php  
+    if ($result->num_rows > 0) {
+    // Récupérer la première ligne du résultat
+    $row = $result->fetch_assoc();
+    // Afficher le nom de l'utilisateur
+    echo "<h1>Bienvenu " . $row['prenom'] . "</h1>";
+} else {
+    echo "<h1>Aucun utilisateur trouvé</h1>";
+}?>
     <p class="info-paragraph">
         Si vous souhaitez prédire vos dépenses et revenus à venir en fonction de vos données historiques 
         pour mieux gérer vos finances.
